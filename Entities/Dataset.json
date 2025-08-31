@@ -1,0 +1,69 @@
+{
+  "name": "Dataset",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the dataset"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "DNA",
+        "ASH",
+        "NZePS"
+      ],
+      "description": "Type of health metric"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to the uploaded dataset file"
+    },
+    "baseline_value": {
+      "type": "number",
+      "description": "Current baseline value"
+    },
+    "cost_per_unit": {
+      "type": "number",
+      "description": "Cost per unit (appointment, admission, prescription)"
+    },
+    "total_volume": {
+      "type": "number",
+      "description": "Total annual volume"
+    },
+    "clinician_hours_per_unit": {
+      "type": "number",
+      "description": "Average clinician hours per unit"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "write": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
